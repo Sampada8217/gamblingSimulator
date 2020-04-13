@@ -6,33 +6,44 @@ read n
 goal=100
 bets=0
 wins=0
+loose=0
+count=0
+amount=0
 for (( i=0; i<n; i++ ))
 do
         cash=$STAKE_START
-	while [ $cash -gt 0 ] && [ $cash -lt  $goal ] 
+        while [ $count -ne 20 ]
         do
-		((bets++))
-		random=$((RANDOM%2))
-		if [  $random -lt  1 ]
-		then 
-                      ((cash++))
-		else
-     		      ((cash--))
-		fi
-	done
-
-       	if [ $cash -eq $goal ]
+		while [ $cash -gt 0 ] && [ $cash -lt  $goal ]  
+       		do
+			((bets++))
+			random=$((RANDOM%2))
+			if [  $random -le 1 ]
+			then 
+                      		((cash++))
+			else	
+     		      		((cash--))
+			fi
+                        
+                done
+                 amount=$(( $cash + $amount ))
+                 echo "Total Amount "  $amount
+                 ((count++))
+        done
+        if [ $cash -eq $goal ]
  	then
 		((wins++))
         else
                 ((loose++))
    	fi
+
 done
-echo  $wins   "   " $n
+          
+echo  $wins  
+echo  $loose
+  
 percent=$(( 100 * $wins / $n ))
-echo "Percent of games won" $percent
-percent1=$(( 100 * $loose / $n ))
-echo "Percent of games loose" $percent1
+echo "Percent of games won" $percent 
 
 if [ $percent -ge 50 ]
 then
