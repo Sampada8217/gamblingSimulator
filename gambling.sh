@@ -9,10 +9,11 @@ wins=0
 loose=0
 count=0
 amount=0
+avg=0
 for (( i=0; i<n; i++ ))
 do
         cash=$STAKE_START
-        while [ $count -ne 20 ]
+        while [ $count -ne  30 ]
         do
 		while [ $cash -gt 0 ] && [ $cash -lt  $goal ]  
        		do
@@ -25,24 +26,25 @@ do
      		      		((cash--))
 			fi 
  			echo $bets                       
-                done
-        	amount=$(( $cash + $amount ))
+                 done
+     
+               	amount=$(( $cash + $amount ))
        		echo "Total Amount" $amount
         	((count++))
-        done
-                
-        if [ $cash -eq $goal ]
- 	then
+        done 
+  
+    	if [ $cash -eq $goal ]
+   	then
 		((wins++))
         else
-                ((loose++))
-                 echo $loose
-   	fi
+               	((loose++))
+                 	
+   	 fi
 done
-          
 echo  $wins  " " $n 
 echo  $loose
-  
+average=$(( $wins - $loose ))
+echo "Won or Lost by " $average
 percent=$(( 100 * $wins / $n ))
 echo "Percent of games won" $percent 
 if [ $percent -ge 50 ]
