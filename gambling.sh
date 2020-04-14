@@ -9,7 +9,6 @@ wins=0
 loose=0
 count=0
 amount=0
-avg=0
 for (( i=0; i<n; i++ ))
 do
         cash=$STAKE_START
@@ -19,53 +18,36 @@ do
        		do
 			((bets++))
 			random=$((RANDOM%2))
-			if [  $random -le 1 ]
+			if [ $random -le  1 ]
 			then 
                       		((cash++))
 			else	
      		      		((cash--))
 			fi 
- 			echo $bets                       
-                 done
-     
-               	amount=$(( $cash + $amount ))
-       		echo "Total Amount" $amount
+                done
+                amount=$(( $cash + $amount ))
         	((count++))
-        done 
-  
-    	if [ $cash -eq $goal ]
-   	then
-		((wins++))
-        else
-               	((loose++))
-                 	
-   	 fi
+        done
+                if [ $cash -eq $goal ]
+   	        then
+               	        ((wins++))
+        	else
+               		((loose++)) 	
+   	 	fi
 done
 
 echo  $wins  " " $n 
 echo  $loose
-average=$(( $wins - $loose ))
-echo "Won or Lost by " $average
 
-echo "Would you like to Continue or Stop Gambling"
-read ch
-case $ch in
-           1)echo "Continue"
-              ;;
-           2)echo "Stop"
-	      ;;
-esac
+diff=$(( $wins - $loose ))
 
-
-
-
-percent=$(( 100 * $wins / $n ))
-echo "Percent of games won" $percent 
+percent=$(( $wins / $n * 100 ))
+ 
 if [ $percent -ge 50 ]
 then
-     echo "Resign for the day"
+     echo "Continue Playing"
 elif [ $percent -le  50 ]
 then
-     echo "Resign for th day"
+     echo "Resign for the day"
 fi
 
