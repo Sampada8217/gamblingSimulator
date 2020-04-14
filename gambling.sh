@@ -41,10 +41,24 @@ do
                  	
    	 fi
 done
+
 echo  $wins  " " $n 
 echo  $loose
 average=$(( $wins - $loose ))
 echo "Won or Lost by " $average
+
+echo "Would you like to Continue or Stop Gambling"
+read ch
+case $ch in
+           1)echo "Continue"
+              ;;
+           2)echo "Stop"
+	      ;;
+esac
+
+
+
+
 percent=$(( 100 * $wins / $n ))
 echo "Percent of games won" $percent 
 if [ $percent -ge 50 ]
@@ -54,3 +68,4 @@ elif [ $percent -le  50 ]
 then
      echo "Resign for th day"
 fi
+
